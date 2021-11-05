@@ -1,3 +1,5 @@
+import { User } from './_models/user';
+import { AccountService } from './_services/account.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,17 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
   title = 'Locação de veículos';
-  clientes: any;
+  funcionarios: any;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private accountService: AccountService){}
 
   ngOnInit(): void {
     this.getClientes();
+    this.setCurrentUser();
+  }
+
+  setCurrentUser(){
+    const user: User = JSON.parse(localStorage.getItem('user'));
+    this.accountService.setCurrentUser(user);
   }
 
   getClientes(){
-    this.http.get('https://localhost:5001/api/clientes').subscribe(response => {
-      this.clientes = response;
+    this.http.get('https://localhost:5001/api/funcionarios').subscribe(response => {
+      this.funcionarios = response;
     }, error => {
       console.log(error);
     });
