@@ -9,5 +9,6 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public string NomeGrupo { get; set; }
+        public List<AppCarro> Carros { get; set; } = new List<AppCarro>();
     }
 }

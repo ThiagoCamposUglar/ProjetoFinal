@@ -1,7 +1,9 @@
 <app-nav></app-nav>
 
+<router-outlet></router-outlet>
+
 <div class="container" style="margin-top: 100px">
   <ul>
-    <li *ngFor="let funcionario of funcionarios">{{funcionario.id}} - {{funcionario.nomeFuncionario}} - {{funcionario.login}}</li>
+    <li *ngFor="let funcionario of funcionarios">{{funcionario.id}} - {{funcionario.nomeFuncionario}} - {{funcionario.login}} - {{funcionario.cargoId}}</li>
   </ul>
 </div>

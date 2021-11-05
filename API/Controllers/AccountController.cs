@@ -34,7 +34,8 @@ namespace API.Controllers
                 NomeFuncionario = registerDto.NomeFuncionario,
                 Login = registerDto.Login.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Senha)),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
+                CargoId = registerDto.CargoId
             };
 
             _context.Funcionarios.Add(funcionario);
@@ -66,6 +67,8 @@ namespace API.Controllers
             return new FuncionarioDto
             {
                 Username = funcionario.Login,
+                NomeFuncionario = funcionario.NomeFuncionario,
+                CargoId = funcionario.CargoId,
                 Token = _tokenService.CreateToken(funcionario)
             };;
         }

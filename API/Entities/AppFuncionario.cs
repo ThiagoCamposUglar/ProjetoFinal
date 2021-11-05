@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,5 +13,10 @@ namespace API.Entities
         public string Login { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+
+        public int CargoId { get; set; }
+        public AppCargo Cargo { get; set; }
+        
+        public List<AppRegistroAluguel> RegistrosAlugueis { get; set; } = new List<AppRegistroAluguel>();
     }
 }

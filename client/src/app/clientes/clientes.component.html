@@ -1,0 +1,53 @@
+  <div class="container" style="margin-top: 80px" *ngIf="accountService.currentUser$ | async">
+    <div class="row">
+    <div class="col-sm-6" *ngIf="clienteSelecionado">
+
+      <button class="btn btn-warning" (click)="voltar()">Fechar</button>
+      <h1>Cliente: {{clienteSelecionado.id}}</h1>
+
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nome</label>
+          <input type="text" class="form-control" value="{{clienteSelecionado.nome}}">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Telefone</label>
+          <input type="text" class="form-control" value="{{clienteSelecionado.telefone}}">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">CPF</label>
+          <input type="text" class="form-control" value="{{clienteSelecionado.cpf}}">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Email</label>
+          <input type="text" class="form-control" value="{{clienteSelecionado.email}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <div [ngClass]="{'col-sm-12': !clienteSelecionado, 'col-sm-6': clienteSelecionado}">
+      <h1>Clientes</h1>
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of clientes" style="cursor: pointer;" (click)="clienteSelect(cliente)">
+            <th scope="row">{{cliente.id}}</th>
+            <td>{{cliente.nome}}</td>
+            <td>{{cliente.telefone}}</td>
+            <td>{{cliente.cpf}}</td>
+            <td>{{cliente.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

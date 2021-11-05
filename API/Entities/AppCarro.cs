@@ -15,5 +15,10 @@ namespace API.Entities
         public string Ano { get; set; }
         public double ValorDiaria { get; set; }
         public string Cor { get; set; }
+
+        public int GrupoId { get; set; }
+        public AppGrupo Grupo { get; set; }
+        
+        public List<AppRegistroAluguel> RegistrosAlugueis { get; set; } = new List<AppRegistroAluguel>();
     }
 }
