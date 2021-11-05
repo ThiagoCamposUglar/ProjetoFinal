@@ -12,6 +12,5 @@ namespace API.Entities
         public string Telefone { get; set; }
         public string Cpf { get; set; }
         public string Email { get; set; }
-        public List<AppRegistroAluguel> Registros { get; set; }
     }
 }

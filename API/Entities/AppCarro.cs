@@ -15,8 +15,5 @@ namespace API.Entities
         public string Ano { get; set; }
         public double ValorDiaria { get; set; }
         public string Cor { get; set; }
-        public int Status { get; set; }
-        [ForeignKey("Id")]
-        public virtual AppGrupo Grupo { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace API.Entities
 {
     public class AppRegistroAluguel
     {
-        
+        public int Id { get; set; }
     }
 }

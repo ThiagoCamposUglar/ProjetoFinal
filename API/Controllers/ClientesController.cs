@@ -9,9 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ClientesController : ControllerBase
+    public class ClientesController : BaseApiController
     {
         private readonly DataContext _context;
         public ClientesController(DataContext context)
@@ -26,7 +24,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AppCliente> GetClientes(int id)
+        public ActionResult<AppCliente> GetCliente(int id)
         {
             return _context.Clientes.Find(id);
         }
