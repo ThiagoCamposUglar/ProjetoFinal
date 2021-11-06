@@ -1,28 +1,28 @@
   <div class="container" style="margin-top: 80px" *ngIf="accountService.currentUser$ | async">
     <div class="row">
-    <div class="col-sm-6" *ngIf="clienteSelecionado">
+    <div class="col-sm-4" *ngIf="clienteSelecionado">
 
       <button class="btn btn-warning" (click)="voltar()">Fechar</button>
       <h1>Cliente: {{clienteSelecionado.id}}</h1>
 
-      <form>
+      <form [formGroup]="clienteForm" (submit)="clienteSubmit()">
         <div class="form-group">
           <label for="exampleInputEmail1">Nome</label>
-          <input type="text" class="form-control" value="{{clienteSelecionado.nome}}">
+          <input type="text" class="form-control col-md-8" formControlName="nomeCliente">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Telefone</label>
-          <input type="text" class="form-control" value="{{clienteSelecionado.telefone}}">
+          <input type="text" class="form-control col-md-8" formControlName="telefone">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">CPF</label>
-          <input type="text" class="form-control" value="{{clienteSelecionado.cpf}}">
+          <input type="text" class="form-control col-md-8" formControlName="cpf">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Email</label>
-          <input type="text" class="form-control" value="{{clienteSelecionado.email}}">
+          <input type="text" class="form-control col-md-8" formControlName="email">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!clienteForm.valid">Enviar</button>
       </form>
     </div>
 
@@ -36,18 +36,37 @@
             <th scope="col">CPF</th>
             <th scope="col">Telefone</th>
             <th scope="col">Email</th>
+            <th scope="col">Opções</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cliente of clientes" style="cursor: pointer;" (click)="clienteSelect(cliente)">
+          <tr *ngFor="let cliente of clientes">
             <th scope="row">{{cliente.id}}</th>
-            <td>{{cliente.nome}}</td>
+            <td>{{cliente.nomeCliente}}</td>
             <td>{{cliente.telefone}}</td>
             <td>{{cliente.cpf}}</td>
             <td>{{cliente.email}}</td>
+            <td>
+              <div class="btn-group">
+                <button (click)="clienteSelect(cliente)" class="btn btn-sm btn-warning">Detalhes</button>
+                <button (click)="openModal(template)" class="btn btn-sm btn-primary">Registros</button>
+                <button class="btn btn-sm btn-danger">Desativar</button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-body">
+    <app-registros-alugueis></app-registros-alugueis>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      FECHAR
+    </button>
+  </div>
+</ng-template>

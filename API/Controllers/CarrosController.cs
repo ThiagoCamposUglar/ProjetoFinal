@@ -4,49 +4,47 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class ClientesController : BaseApiController
+    public class CarrosController : BaseApiController
     {
         private readonly DataContext _context;
-        public ClientesController(DataContext context)
+        public CarrosController(DataContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AppCliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<AppCarro>>> GetCarros()
         {
-            return await _context.Clientes.ToListAsync();
+            return await _context.Carros.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppCliente>> GetCliente(int id)
+        public async Task<ActionResult<AppCarro>> GetCarro(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var carro = await _context.Carros.FindAsync(id);
 
-            if (cliente == null)
+            if(carro == null)
             {
                 return NotFound();
             }
 
-            return cliente;
+            return carro;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, AppCliente cliente)
+        public async Task<IActionResult> PutCarro(int id, AppCarro carro)
         {
-            if (id != cliente.Id)
+            if (id != carro.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(carro).State = EntityState.Modified;
 
             try
             {
@@ -54,7 +52,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
+                if (!CarroExists(id))
                 {
                     return NotFound();
                 }
@@ -68,33 +66,32 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AppCliente>> PostPaymentDetail(AppCliente cliente)
+        public async Task<ActionResult<AppCarro>> PostCarro(AppCarro carro)
         {
-            _context.Clientes.Add(cliente);
+            _context.Carros.Add(carro);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
+            return CreatedAtAction("GetCarro", new { id = carro.Id }, carro);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente(int id)
+        public async Task<IActionResult> DeleteCarro(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
+            var carro = await _context.Carros.FindAsync(id);
+            if (carro == null)
             {
                 return NotFound();
             }
 
-            _context.Clientes.Remove(cliente);
+            _context.Carros.Remove(carro);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ClienteExists(int id)
+        private bool CarroExists(int id)
         {
-            return _context.Clientes.Any(e => e.Id == id);
+            return _context.Carros.Any(e => e.Id == id);
         }
-
     }
 }

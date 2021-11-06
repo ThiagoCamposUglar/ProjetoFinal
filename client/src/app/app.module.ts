@@ -12,6 +12,7 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { RegistrosAlugueisComponent } from './registros-alugueis/registros-alugueis.component';
 import { CarrosComponent } from './carros/carros.component';
 import { FuncionariosComponent } from './funcionarios/funcionarios.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FuncionariosComponent } from './funcionarios/funcionarios.component';
     BrowserAnimationsModule,
     FormsModule,
     BsDropdownModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
