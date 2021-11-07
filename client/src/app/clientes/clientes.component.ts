@@ -16,6 +16,16 @@ export class ClientesComponent implements OnInit {
   clientes: any;
   public clienteForm: FormGroup;
   modalRef?: BsModalRef;
+  private _filtroLista: string = '';
+  public clientesFiltrados: any = [];
+
+  public get filtroLista(): string {
+    return this._filtroLista;
+  }
+  public set filtroLista(value: string) {
+    this._filtroLista = value;
+    this.clientesFiltrados = this.filtroLista ? this.filtrarClientes(this.filtroLista): this.clientes;
+  }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
@@ -54,8 +64,14 @@ export class ClientesComponent implements OnInit {
   getClientes(){
     this.http.get(this.baseUrl).subscribe(response => {
       this.clientes = response;
+      this.clientesFiltrados = this.clientes;
     }, error => {
       console.log(error);
     });
+  }
+
+  filtrarClientes(filtrarPor: string): any{
+    filtrarPor = filtrarPor.toLocaleLowerCase();
+    return this.clientes.filter((cliente:{nomeCliente: string; telefone: string; cpf: string; email: string}) => cliente.nomeCliente.toLocaleLowerCase().indexOf(filtrarPor) !== -1 || cliente.telefone.toLocaleLowerCase().indexOf(filtrarPor) !== -1 || cliente.cpf.toLocaleLowerCase().indexOf(filtrarPor) !== -1 || cliente.email.toLocaleLowerCase().indexOf(filtrarPor) !== -1)
   }
 }
