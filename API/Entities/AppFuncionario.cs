@@ -17,6 +17,6 @@ namespace API.Entities
         public int CargoId { get; set; }
         public AppCargo Cargo { get; set; }
         
-        public List<AppRegistroAluguel> RegistrosAlugueis { get; set; } = new List<AppRegistroAluguel>();
+        public List<AppRegistroAluguel> RegistrosAlugueis { get; set; }
     }
 }

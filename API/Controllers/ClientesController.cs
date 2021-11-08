@@ -35,18 +35,28 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return cliente;
+            return Ok(cliente);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(int id, AppCliente cliente)
         {
-            if (id != cliente.Id)
+            var cliente2 = await _context.Clientes.FindAsync(id);
+            if(cliente2 != null)
             {
-                return BadRequest();
+                cliente2.NomeCliente = cliente.NomeCliente;
+                cliente2.Email = cliente.Email;
+                cliente2.Cpf = cliente.Cpf;
+                cliente2.Telefone = cliente.Telefone;
             }
+            
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            //if (id != cliente.Id)
+            //{
+               // return BadRequest();
+            //}
+
+            //_context.Entry(cliente).State = EntityState.Modified;
 
             try
             {
@@ -64,11 +74,11 @@ namespace API.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(cliente);
         }
 
         [HttpPost]
-        public async Task<ActionResult<AppCliente>> PostPaymentDetail(AppCliente cliente)
+        public async Task<ActionResult<AppCliente>> PostCliente(AppCliente cliente)
         {
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
@@ -88,7 +98,7 @@ namespace API.Controllers
             _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool ClienteExists(int id)

@@ -12,9 +12,8 @@ namespace API.Entities
         {
             
         }
-        public AppRegistroAluguel(int id, DateTime dataFim, DateTime dataInicio ,int clienteId, int funcionarioId, int carroId) 
+        public AppRegistroAluguel(DateTime dataFim, DateTime dataInicio ,int clienteId, int funcionarioId, int carroId) 
         {
-            Id = id;
             DataFim = dataFim;
             DataInicio = dataInicio;
             ClienteId = clienteId;

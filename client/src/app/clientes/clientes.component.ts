@@ -12,9 +12,10 @@ import { AccountService } from '../_services/account.service';
 })
 export class ClientesComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/clientes';
-  public clienteSelecionado: Cliente;
+  public clienteSelecionado: any;
   clientes: any;
   public clienteForm: FormGroup;
+  public novoClienteForm: FormGroup;
   modalRef?: BsModalRef;
   private _filtroLista: string = '';
   public clientesFiltrados: any = [];
@@ -33,32 +34,11 @@ export class ClientesComponent implements OnInit {
 
   constructor(private http: HttpClient, public accountService: AccountService, private fb: FormBuilder, private modalService: BsModalService) {
     this.criarForm();
+    this.criarNovoClienteForm();
   }
 
   ngOnInit(): void {
     this.getClientes();
-  }
-
-  criarForm(){
-    this.clienteForm = this.fb.group({
-      nomeCliente: ['', Validators.required],
-      telefone: ['', Validators.required],
-      cpf: ['', Validators.required],
-      email: ['', Validators.required]
-    })
-  }
-
-  clienteSubmit(){
-    console.log(this.clienteForm.value);
-  }
-
-  clienteSelect(cliente: Cliente){
-    this.clienteSelecionado = cliente;
-    this.clienteForm.patchValue(cliente);
-  }
-
-  voltar(){
-    this.clienteSelecionado = null;
   }
 
   getClientes(){
@@ -69,6 +49,61 @@ export class ClientesComponent implements OnInit {
       console.log(error);
     });
   }
+
+
+  clienteSubmit(){
+    console.log(this.clienteForm.value);
+    this.http.put( `${this.baseUrl}/${this.clienteSelecionado.id}`, this.clienteForm.value).subscribe(cliente => {
+      this.clienteSelecionado = cliente;
+      window.alert('Dados alterados com sucesso');
+      this.getClientes();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  postCliente(){
+    console.log(this.novoClienteForm.value);
+    this.http.post(this.baseUrl, this.novoClienteForm.value).subscribe(cliente => {
+      cliente;
+      window.alert('Cadastrado com sucesso');
+      this.getClientes();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+
+
+  criarForm(){
+    this.clienteForm = this.fb.group({
+      id:['', Validators.required],
+      nomeCliente: ['', Validators.required],
+      telefone: ['', Validators.required],
+      cpf: ['', Validators.required],
+      email: ['', Validators.required]
+    })
+  }
+
+  criarNovoClienteForm(){
+    this.novoClienteForm = this.fb.group({
+      nomeCliente: ['', Validators.required],
+      telefone: ['', Validators.required],
+      cpf: ['', Validators.required],
+      email: ['', Validators.required]
+    })
+  }
+
+  clienteSelect(cliente: Cliente){
+    this.clienteSelecionado = cliente;
+    this.clienteForm.patchValue(cliente);
+    console.log(this.clienteSelecionado);
+  }
+
+  voltar(){
+    this.clienteSelecionado = null;
+  }
+
 
   filtrarClientes(filtrarPor: string): any{
     filtrarPor = filtrarPor.toLocaleLowerCase();

@@ -19,6 +19,6 @@ namespace API.Entities
         public int GrupoId { get; set; }
         public AppGrupo Grupo { get; set; }
         
-        public List<AppRegistroAluguel> RegistrosAlugueis { get; set; } = new List<AppRegistroAluguel>();
+        public List<AppRegistroAluguel> RegistrosAlugueis { get; set; }
     }
 }

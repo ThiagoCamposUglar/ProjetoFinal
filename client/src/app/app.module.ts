@@ -31,7 +31,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FormsModule,
     BsDropdownModule.forRoot(),
     ReactiveFormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -21,6 +21,7 @@ export class NavComponent implements OnInit {
       console.log(response);
     }, error => {
       console.log(error);
+      window.alert('Usuário ou senha inválidos')
     });
   }
 
