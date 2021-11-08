@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace API.Entities
@@ -19,6 +20,7 @@ namespace API.Entities
         public int GrupoId { get; set; }
         public AppGrupo Grupo { get; set; }
         
+        [JsonIgnore]
         public List<AppRegistroAluguel> RegistrosAlugueis { get; set; }
     }
 }
