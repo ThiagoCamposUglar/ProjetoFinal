@@ -1,9 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container">
+    <img src="/assets/logoloccar.png" style="height: 25px; width: 80px; margin-top: 10px; margin-right: 20px; margin-bottom: 10px;">
     <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
-      <li>
-        <img src="/assets/logoloccar.png" style="height: 25px; width: 80px; margin-top: 10px; margin-right: 20px;">
-      </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/clientes">Clientes</a>
         </li>

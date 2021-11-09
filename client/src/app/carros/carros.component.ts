@@ -14,8 +14,8 @@ export class CarrosComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/carros';
   gruposUrl = 'https://localhost:5001/api/grupos';
   grupos: any;
-  public carroSelecionado: any;
   carros: any;
+  public carroSelecionado: any;
   public carroForm: FormGroup;
   public novoCarroForm: FormGroup;
   modalRef?: BsModalRef;

@@ -1,12 +1,11 @@
 <div class="container" style="margin-top: 80px" *ngIf="accountService.currentUser$ | async">
   <div class="row">
-  <button class="col-sm-2 btn btn-primary" *ngIf="!carroSelecionado" (click)="openModal(novoCarro)">Novo carro</button>
-  <div class="col-sm-4" *ngIf="carroSelecionado">
-    <button class="btn btn-warning" (click)="voltar()">Fechar</button>
+    <div class="col-sm-4" *ngIf="carroSelecionado">
+      <button class="btn btn-warning" (click)="voltar()">Fechar</button>
 
-    <form [formGroup]="carroForm" (submit)="carroSubmit()">
-      <div class="form-group">
-        <h1>Carro: {{carroSelecionado.id}}</h1>
+      <form [formGroup]="carroForm" (submit)="carroSubmit()">
+        <div class="form-group">
+          <h1>Carro: {{carroSelecionado.id}}</h1>
         <label>Modelo</label>
         <input type="text" class="form-control col-md-8" formControlName="modelo">
       </div>
@@ -41,6 +40,7 @@
   </div>
 
   <div [ngClass]="{'col-sm-12': !carroSelecionado, 'col-sm-6': carroSelecionado}">
+    <button class="btn btn-primary" *ngIf="!carroSelecionado" (click)="openModal(novoCarro)">Novo carro</button>
     <h1>Carros</h1>
     <input type="text" class="sm-4" placeholder="Buscar" [(ngModel)]="filtroLista" style="margin-bottom: 10px;">
     <h3>Filtro: {{filtroLista}}</h3>
@@ -65,7 +65,7 @@
           <td>{{carro.marca}}</td>
           <td>{{carro.placa}}</td>
           <td>{{carro.ano}}</td>
-          <td>{{carro.valorDiaria}}</td>
+          <td>R${{carro.valorDiaria}}</td>
           <td>{{carro.cor}}</td>
           <td>{{carro.grupoId}} <div *ngFor="let grupo of grupos"><div *ngIf="carro.grupoId == grupo.id">{{grupo.nomeGrupo}}</div></div></td>
           <td>
@@ -141,7 +141,7 @@
         </div>
 
 
-    <button class="btn btn-primary" type="submit" [disabled]="!novoCarroForm.valid">Criar</button>
+    <button class="btn btn-primary" type="submit" [disabled]="!novoCarroForm.valid" style="margin-bottom: 10px;">Criar</button>
   </form>
 </div>
 <div class="modal-footer">
