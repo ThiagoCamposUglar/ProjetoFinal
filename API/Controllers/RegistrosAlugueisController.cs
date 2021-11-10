@@ -71,6 +71,10 @@ namespace API.Controllers
             registroAluguel.Carro = await _context.Carros.FindAsync(registroAluguel.CarroId);
             TimeSpan ts = registroAluguel.DataFim.Subtract(registroAluguel.DataInicio);
             registroAluguel.ValorAluguel = Convert.ToInt32(ts.TotalDays) * registroAluguel.Carro.ValorDiaria;
+            if(registroAluguel.ValorAluguel == 0)
+            {
+                registroAluguel.ValorAluguel = registroAluguel.Carro.ValorDiaria;
+            }
             _context.Registros.Add(registroAluguel);
             await _context.SaveChangesAsync();
 

@@ -157,13 +157,12 @@
 
 
 
-<ng-template #template>
-  <div class="modal-header">
+<ng-template #template class="myModal">
+  <div class="modal-header myModal">
     <h1>{{carroSelecionado2.modelo}}</h1>
   </div>
-  <div class="modal-body">
+  <div class="modal-body myModal">
     <table class="table table-hover">
-      adasd dasdasd dasdasd 
       <tbody *ngIf="registros && registros.length">
         <tr *ngFor="let registro of registros">
           <div *ngIf="registro.carroId == carroSelecionado2.id">
@@ -181,7 +180,7 @@
                 <div *ngIf="carro.id == registro.carroId">{{carro.modelo}}</div>
               </div>
             </td>
-            <td>{{registro.dataInicio}}</td>
+            <td><time datetime="YYYY-MM-DD">{{registro.dataInicio}}</time></td>
             <td>{{registro.dataFim}}</td>
             <td>R${{registro.valorAluguel}}</td>
           </div>
