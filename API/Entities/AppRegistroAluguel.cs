@@ -34,12 +34,5 @@ namespace API.Entities
 
         public int CarroId { get; set; }
         public AppCarro Carro { get; set; }
-
-
-        public void valorFinal()
-        {
-            TimeSpan ts = DataFim.Subtract(DataInicio);
-            ValorAluguel = Convert.ToInt32(ts.TotalDays) * Carro.ValorDiaria;
-        }
     }
 }

@@ -32,7 +32,7 @@
       <div class="form-group">
         <label>Grupo</label>
         <select class="form-control col-md-8" formControlName="grupoId">
-          <option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.id}}-{{grupo.nomeGrupo}}</option>
+          <option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.id}} - {{grupo.nomeGrupo}}</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="!carroForm.valid">Salvar</button>
@@ -67,11 +67,11 @@
           <td>{{carro.ano}}</td>
           <td>R${{carro.valorDiaria}}</td>
           <td>{{carro.cor}}</td>
-          <td>{{carro.grupoId}} <div *ngFor="let grupo of grupos"><div *ngIf="carro.grupoId == grupo.id">{{grupo.nomeGrupo}}</div></div></td>
+          <td><div style="display: none;">{{carro.grupoId}}</div><div *ngFor="let grupo of grupos"><div *ngIf="carro.grupoId == grupo.id">{{grupo.nomeGrupo}}</div></div></td>
           <td>
             <div class="btn-group">
               <button (click)="carroSelect(carro)" class="btn btn-sm btn-warning">Detalhes</button>
-              <button (click)="openModal(template)" class="btn btn-sm btn-primary">Registros</button>
+              <button (click)="openModal(template); registrosSelect(carro)" class="btn btn-sm btn-primary">Registros</button>
               <button class="btn btn-sm btn-danger">Desativar</button>
             </div>
           </td>
@@ -135,7 +135,7 @@
           <div class="col-md-4 mb-3">
             <label>Grupo</label>
             <select class="form-control" formControlName="grupoId">
-              <option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.id}}-{{grupo.nomeGrupo}}</option>
+              <option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.id}} - {{grupo.nomeGrupo}}</option>
             </select>
           </div>
         </div>
@@ -158,9 +158,37 @@
 
 
 <ng-template #template>
-<div class="modal-body">
-  <app-registros-alugueis></app-registros-alugueis>
-</div>
+  <div class="modal-header">
+    <h1>{{carroSelecionado2.modelo}}</h1>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover">
+      adasd dasdasd dasdasd 
+      <tbody *ngIf="registros && registros.length">
+        <tr *ngFor="let registro of registros">
+          <div *ngIf="registro.carroId == carroSelecionado2.id">
+            <th scope="row">{{registro.id}}</th>
+            <td>
+              <div *ngFor="let cliente of clientes">
+                <div *ngIf="cliente.id == registro.clienteId">
+                  {{cliente.nomeCliente}}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div style="display: none;">{{registro.carroId}}</div>
+              <div *ngFor="let carro of carros">
+                <div *ngIf="carro.id == registro.carroId">{{carro.modelo}}</div>
+              </div>
+            </td>
+            <td>{{registro.dataInicio}}</td>
+            <td>{{registro.dataFim}}</td>
+            <td>R${{registro.valorAluguel}}</td>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 <div class="modal-footer">
   <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef?.hide()">
     FECHAR

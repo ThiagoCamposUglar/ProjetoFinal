@@ -66,11 +66,12 @@ namespace API.Controllers
 
             return new FuncionarioDto
             {
+                Id = funcionario.Id,
                 Username = funcionario.Login,
                 NomeFuncionario = funcionario.NomeFuncionario,
                 CargoId = funcionario.CargoId,
                 Token = _tokenService.CreateToken(funcionario)
-            };;
+            };
         }
 
         private async Task<bool> FuncionarioExiste(string login)

@@ -68,11 +68,13 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<AppRegistroAluguel>> PostRegistro(AppRegistroAluguel registroAluguel)
         {
-            registroAluguel.valorFinal();
+            registroAluguel.Carro = await _context.Carros.FindAsync(registroAluguel.CarroId);
+            TimeSpan ts = registroAluguel.DataFim.Subtract(registroAluguel.DataInicio);
+            registroAluguel.ValorAluguel = Convert.ToInt32(ts.TotalDays) * registroAluguel.Carro.ValorDiaria;
             _context.Registros.Add(registroAluguel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRegistro", new { id = registroAluguel.Id }, registroAluguel);
+            return Ok(CreatedAtAction("GetRegistro", new { id = registroAluguel.Id }, registroAluguel));
         }
 
         [HttpDelete("{id}")]

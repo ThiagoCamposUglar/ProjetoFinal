@@ -13,14 +13,19 @@ import { Carro } from '../_models/carro';
 export class CarrosComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/carros';
   gruposUrl = 'https://localhost:5001/api/grupos';
+  registrosUrl = 'https://localhost:5001/api/registrosalugueis';
+  clientesUrl = 'https://localhost:5001/api/clientes';
   grupos: any;
   carros: any;
+  registros: any;
+  clientes: any;
   public carroSelecionado: any;
   public carroForm: FormGroup;
   public novoCarroForm: FormGroup;
   modalRef?: BsModalRef;
   private _filtroLista: string = '';
   public carrosFiltrados: any = [];
+  public carroSelecionado2: any;
 
 
 
@@ -44,6 +49,8 @@ export class CarrosComponent implements OnInit {
   ngOnInit(): void {
     this.getCarros();
     this.getGrupos();
+    this.getRegistros();
+    this.getClientes();
   }
 
   getGrupos(){
@@ -59,6 +66,23 @@ export class CarrosComponent implements OnInit {
     this.http.get(this.baseUrl).subscribe(response => {
       this.carros = response;
       this.carrosFiltrados = this.carros;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getRegistros(){
+    this.http.get(this.registrosUrl).subscribe(response => {
+      this.registros = response;
+      console.log(this.registros);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getClientes(){
+    this.http.get(this.clientesUrl).subscribe(response => {
+      this.clientes = response;
     }, error => {
       console.log(error);
     });
@@ -80,6 +104,7 @@ export class CarrosComponent implements OnInit {
     this.http.post(this.baseUrl, this.novoCarroForm.value).subscribe(carro => {
       carro;
       window.alert('Cadastrado com sucesso');
+      this.modalRef.hide();
       this.getCarros();
     }, error => {
       console.log(error);
@@ -115,6 +140,10 @@ export class CarrosComponent implements OnInit {
     this.carroSelecionado = carro;
     this.carroForm.patchValue(carro);
     console.log(this.carroSelecionado);
+  }
+
+  registrosSelect(carro: Carro){
+    this.carroSelecionado2 = carro;
   }
 
   voltar(){

@@ -13,6 +13,12 @@ import { RegistrosAlugueisComponent } from './registros-alugueis/registros-alugu
 import { CarrosComponent } from './carros/carros.component';
 import { FuncionariosComponent } from './funcionarios/funcionarios.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
+const maskConfig: Partial<IConfig> = {
+  validation: false
+};
 
 @NgModule({
   declarations: [
@@ -32,7 +38,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     BsDropdownModule.forRoot(),
     ReactiveFormsModule,
     ModalModule.forRoot(),
-    
+    BsDatepickerModule.forRoot(),
+    NgxMaskModule.forRoot(maskConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

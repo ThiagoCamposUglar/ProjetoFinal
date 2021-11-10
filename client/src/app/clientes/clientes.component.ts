@@ -67,6 +67,7 @@ export class ClientesComponent implements OnInit {
     this.http.post(this.baseUrl, this.novoClienteForm.value).subscribe(cliente => {
       cliente;
       window.alert('Cadastrado com sucesso');
+      this.modalRef?.hide();
       this.getClientes();
     }, error => {
       console.log(error);

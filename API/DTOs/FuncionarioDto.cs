@@ -7,6 +7,7 @@ namespace API.DTOs
 {
     public class FuncionarioDto
     {
+        public int Id { get; set; }
         public string Username { get; set; }
         public string NomeFuncionario { get; set; }
         public int CargoId { get; set; }
