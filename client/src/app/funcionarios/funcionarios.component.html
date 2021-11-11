@@ -1,7 +1,7 @@
 <div class="container" style="margin-top: 80px" *ngIf="accountService.currentUser$ | async">
   <div class="row">
 
-    <div class="col-sm-4" *ngIf="funcionarioSelecionado">
+    <!-- <div class="col-sm-4" *ngIf="funcionarioSelecionado">
       <button class="btn btn-warning" (click)="voltar()">Fechar</button>
 
       <form [formGroup]="funcionarioForm" (submit)="funcionarioSubmit()">
@@ -22,9 +22,9 @@
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="!funcionarioForm.valid">Salvar</button>
     </form>
-  </div>
+  </div> -->
 
-  <div [ngClass]="{'col-sm-12': !funcionarioSelecionado, 'col-sm-6': funcionarioSelecionado}">
+  <div [ngClass]="{'col-sm-12': funcionarioSelecionado, 'col-sm-12': !funcionarioSelecionado}">
     <button class="btn btn-primary" *ngIf="!funcionarioSelecionado" (click)="openModal(novoFuncionario)">Novo funcionário</button>
     <h1>Funcionários</h1>
     <input type="text" class="sm-4" placeholder="Buscar" [(ngModel)]="filtroLista" style="margin-bottom: 10px;">
@@ -48,7 +48,7 @@
           <td>
             <div class="btn-group">
               <button (click)="openModal(template); registrosSelect(funcionario)" class="btn btn-sm btn-primary" style="margin-right: 10px;">Registros</button>
-              <button (click)="openModal(deleteTemplate)" class="btn btn-sm btn-danger">Desativar</button>
+              <button (click)="openModal(deleteTemplate); funcionarioSelectDelete(funcionario)" class="btn btn-sm btn-danger">Desativar</button>
             </div>
           </td>
         </tr>
@@ -65,10 +65,7 @@
       <div class="form-row">
         <div class="col-md-6 mb-3">
           <label>Nome</label>
-          <input type="text" class="form-control" formControlName="nomeFuncionario" required>
-          <div class="valid-tooltip">
-          Looks good!
-        </div>
+          <input type="text" class="form-control" formControlName="nomeFuncionario" required maxlength="50">
       </div>
       <div class="col-md-6 mb-3">
         <label>Cargo</label>
@@ -81,17 +78,11 @@
     <div class="form-row">
       <div class="col-md-6 mb-3">
         <label>Senha</label>
-        <input type="password" class="form-control" formControlName="senha" required>
-        <div class="invalid-tooltip">
-          Please provide a valid city.
-        </div>
+        <input type="password" class="form-control" formControlName="senha" required maxlength="16" minlength="8">
       </div>
       <div class="col-md-6 mb-3">
         <label>Login</label>
-        <input type="text" class="form-control" formControlName="login" required>
-        <div class="valid-tooltip">
-          Looks good!
-        </div>
+        <input type="text" class="form-control" formControlName="login" required maxlength="20" minlength="3">
       </div>
     </div>
     <button class="btn btn-primary" type="submit" [disabled]="!novoFuncionarioForm.valid" style="margin-bottom: 10px;">Criar</button>
@@ -112,7 +103,7 @@
 
 <ng-template #template class="myModal">
   <div class="modal-header myModal">
-    <h1>{{funcionarioSelecionado2.modelo}}</h1>
+    <h1>{{funcionarioSelecionado2.nomeFuncionario}}</h1>
   </div>
   <div class="modal-body myModal">
     <table class="table table-hover">
@@ -150,11 +141,14 @@
 
 
 <ng-template #deleteTemplate>
-  <div class="container">
+  <div class="modal-header">
     <h1>Tem certeza que deseja desativar o funcionário?</h1>
   </div>
+  <div class="modal-body">
+    <h3>{{funcionarioSelecionadoDelete.id}} - {{funcionarioSelecionadoDelete.nomeFuncionario}} - {{funcionarioSelecionadoDelete.login}}</h3>
+  </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger">Desativar</button>
+    <button type="button" class="btn btn-danger" (click)="deleteFuncionario()">Desativar</button>
     <button type="button" class="btn btn-primary" (click)="modalRef?.hide()">Cancelar</button>
   </div>
 </ng-template>

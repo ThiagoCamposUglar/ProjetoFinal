@@ -88,6 +88,8 @@ export class ClientesComponent implements OnInit {
     });
   }
 
+
+  ////////////////
   deleteCliente(){
     this.http.delete(`${this.baseUrl}/${this.clienteSelecionadoDelete.id}`).subscribe(cliente => {
       this.clienteSelecionadoDelete = cliente;
@@ -106,7 +108,7 @@ export class ClientesComponent implements OnInit {
       telefone: ['', Validators.required],
       cpf: ['', Validators.required],
       email: ['', Validators.email]
-    })
+    });
   }
 
   criarNovoClienteForm(){

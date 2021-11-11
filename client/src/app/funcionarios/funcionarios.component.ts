@@ -1,3 +1,4 @@
+import { Funcionario } from './../_models/funcionario';
 import { HttpClient } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -13,14 +14,19 @@ export class FuncionariosComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/funcionarios';
   accountRegisterUrl = 'https://localhost:5001/api/account/register';
   cargosUrl = 'https://localhost:5001/api/cargos';
+  registrosUrl = 'https://localhost:5001/api/registrosalugueis';
   funcionarios: any;
   cargos: any;
+  registros: any;
   public funcionarioSelecionado: any;
   public funcionarioForm: FormGroup;
   public novoFuncionarioForm: FormGroup;
   modalRef?: BsModalRef;
   private _filtroLista: string = "";
   public funcionariosFiltrados: any = [];
+  funcionarioSelecionadoDelete: any;
+  funcionarioSelecionado2: any;
+  funcionarioAtual: any;
 
 
   public get filtroLista(): string {
@@ -44,6 +50,8 @@ export class FuncionariosComponent implements OnInit {
   ngOnInit(): void {
     this.getfuncionarios();
     this.getCargos();
+    this.getRegistros();
+    this.funcionarioAtual = JSON.parse(localStorage.getItem('user'))
   }
 
   getfuncionarios(){
@@ -63,19 +71,49 @@ export class FuncionariosComponent implements OnInit {
     });
   }
 
+  getRegistros(){
+    this.http.get(this.registrosUrl).subscribe(response => {
+      this.registros = response;
+      console.log(this.registros);
+    }, error => {
+      console.log(error);
+    });
+  }
+
   funcionarioSubmit(){
     //não vai ter
   }
 
   postFuncionario(){
-    this.http.post(this.accountRegisterUrl, this.novoFuncionarioForm.value).subscribe(funcionario => {
-      funcionario;
-      window.alert('Cadastrado com sucesso');
-      this.modalRef.hide();
-      this.getfuncionarios();
-    }, error => {
-      console.log(error);
-    });
+    if(this.funcionarioAtual.cargoId != 1){
+      window.alert('Você não tem permissão para realizar esta ação')
+    }
+    else{
+      this.http.post(this.accountRegisterUrl, this.novoFuncionarioForm.value).subscribe(funcionario => {
+        funcionario;
+        window.alert('Cadastrado com sucesso');
+        this.modalRef.hide();
+        this.getfuncionarios();
+      }, error => {
+        console.log(error);
+      });
+    }
+  }
+
+  deleteFuncionario(){
+    if(this.funcionarioAtual.cargoId != 1){
+      window.alert('Você não tem permissão para realizar esta ação')
+    }
+    else{
+      this.http.delete(`${this.baseUrl}/${this.funcionarioSelecionadoDelete.id}`).subscribe(funcionario => {
+        this.funcionarioSelecionadoDelete = funcionario;
+        window.alert('Funcionário desativado com secesso');
+        this.modalRef.hide();
+        this.getfuncionarios();
+      }, error => {
+        console.log(error);
+      })
+    }
   }
 
   criarForm(){
@@ -91,8 +129,12 @@ export class FuncionariosComponent implements OnInit {
     })
   }
 
-  registrosSelect(){
-    this.funcionarioSelecionado;
+  registrosSelect(funcionario: Funcionario){
+    this.funcionarioSelecionado2 = funcionario;
+  }
+
+  funcionarioSelectDelete(funcionario: Funcionario){
+    this.funcionarioSelecionadoDelete = funcionario;
   }
 
   filtrarFuncionarios(filtrarPor: string): any{

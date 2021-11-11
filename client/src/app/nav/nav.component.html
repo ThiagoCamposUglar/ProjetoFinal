@@ -19,6 +19,8 @@
       <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
         <a class="dropdown-toggle text-light" dropdownToggle>Bem Vindo</a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
+          <a class="dropdown-item">{{usuarioAtual.nomeFuncionario}}</a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item">Editar perfil</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()">Logout</a>
@@ -38,7 +40,7 @@
           class="form-control mr-sm-2"
           type="password"
           placeholder="Password">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        <button routerLink="registros-alugueis" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
       </form>
 
   </div>

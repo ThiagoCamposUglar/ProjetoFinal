@@ -26,6 +26,8 @@ export class CarrosComponent implements OnInit {
   private _filtroLista: string = '';
   public carrosFiltrados: any = [];
   public carroSelecionado2: any;
+  public carroSelecionadoDelete: any;
+  funcionarioAtual: any;
 
 
 
@@ -51,6 +53,7 @@ export class CarrosComponent implements OnInit {
     this.getGrupos();
     this.getRegistros();
     this.getClientes();
+    this.funcionarioAtual = JSON.parse(localStorage.getItem('user'))
   }
 
   getGrupos(){
@@ -100,15 +103,36 @@ export class CarrosComponent implements OnInit {
   }
 
   postCarro(){
-    console.log(this.novoCarroForm.value);
-    this.http.post(this.baseUrl, this.novoCarroForm.value).subscribe(carro => {
-      carro;
-      window.alert('Cadastrado com sucesso');
-      this.modalRef.hide();
-      this.getCarros();
-    }, error => {
-      console.log(error);
-    });
+    if(this.funcionarioAtual.cargoId != 1){
+      window.alert('Você não tem permissão para realizar esta ação')
+    }
+    else{
+      this.http.post(this.baseUrl, this.novoCarroForm.value).subscribe(carro => {
+        carro;
+        window.alert('Cadastrado com sucesso');
+        this.modalRef.hide();
+        this.getCarros();
+      }, error => {
+       console.log(error);
+      });
+    }
+  }
+
+  deleteCarro(){
+    if(this.funcionarioAtual.cargoId != 1){
+      window.alert('Você não tem permissão para realizar esta ação')
+    }
+    else{
+      this.http.delete(`${this.baseUrl}/${this.carroSelecionadoDelete.id}`).subscribe(carro => {
+        this.carroSelecionadoDelete = carro;
+        window.alert('Carro desativado com sucesso');
+        this.modalRef.hide();
+        this.getCarros();
+      }, error => {
+        console.log(error);
+      });
+    }
+
   }
 
   criarForm(){
@@ -144,6 +168,10 @@ export class CarrosComponent implements OnInit {
 
   registrosSelect(carro: Carro){
     this.carroSelecionado2 = carro;
+  }
+
+  carroSelectDelete(carro: Carro){
+    this.carroSelecionadoDelete = carro;
   }
 
   voltar(){

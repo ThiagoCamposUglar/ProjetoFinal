@@ -72,7 +72,7 @@
             <div class="btn-group">
               <button (click)="carroSelect(carro)" class="btn btn-sm btn-warning" style="margin-right: 10px;">Detalhes</button>
               <button (click)="openModal(template); registrosSelect(carro)" class="btn btn-sm btn-primary" style="margin-right: 10px;">Registros</button>
-              <button (click)="openModal(deleteTemplate)" class="btn btn-sm btn-danger">Desativar</button>
+              <button (click)="openModal(deleteTemplate); carroSelectDelete(carro)" class="btn btn-sm btn-danger">Desativar</button>
             </div>
           </td>
         </tr>
@@ -104,14 +104,14 @@
     <div class="form-row">
       <div class="col-md-6 mb-3">
         <label>Placa</label>
-        <input type="text" class="form-control" formControlName="placa" required>
+        <input mask="SSS-0A00" type="text" class="form-control" formControlName="placa" required minlength="7">
         <div class="invalid-tooltip">
           Please provide a valid city.
         </div>
       </div>
         <div class="col-md-6 mb-3">
           <label>Ano</label>
-          <input type="text" class="form-control" formControlName="ano" required>
+          <input mask="0000" type="text" class="form-control" formControlName="ano" required minlength="4">
           <div class="invalid-tooltip">
             Please provide a valid city.
           </div>
@@ -158,7 +158,7 @@
 
 
 <ng-template #template>
-  <div class="modal-header myModal">
+  <div class="modal-header">
     <h1>{{carroSelecionado2.modelo}}</h1>
   </div>
   <div class="modal-body">
@@ -196,11 +196,14 @@
 </ng-template>
 
 <ng-template #deleteTemplate>
-  <div class="container">
+  <div class="modal-header">
     <h1>Tem certeza que deseja desativar o carro?</h1>
   </div>
+  <div class="modal-body">
+    <h3>{{carroSelecionadoDelete.id}} - {{carroSelecionadoDelete.modelo}} - {{carroSelecionadoDelete.marca}}</h3>
+  </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger">Desativar</button>
+    <button type="button" class="btn btn-danger" (click)="deleteCarro()">Desativar</button>
     <button type="button" class="btn btn-primary" (click)="modalRef?.hide()">Cancelar</button>
   </div>
 </ng-template>

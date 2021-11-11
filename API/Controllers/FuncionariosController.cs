@@ -32,5 +32,20 @@ namespace API.Controllers
         {
             return _context.Funcionarios.Find(id);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFuncionario(int id)
+        {
+            var funcionario = await _context.Funcionarios.FindAsync(id);
+            if (funcionario == null)
+            {
+                return NotFound();
+            }
+
+            _context.Funcionarios.Remove(funcionario);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

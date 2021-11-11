@@ -10,15 +10,18 @@ import { Observable } from 'rxjs';
 })
 export class NavComponent implements OnInit {
   model: any = {}
+  usuarioAtual: any;
 
   constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.usuarioAtual = JSON.parse(localStorage.getItem('user'))
   }
 
   login(){
     this.accountService.login(this.model).subscribe(response => {
       console.log(response);
+      this.usuarioAtual = JSON.parse(localStorage.getItem('user'))
     }, error => {
       console.log(error);
       window.alert('Usuário ou senha inválidos')
