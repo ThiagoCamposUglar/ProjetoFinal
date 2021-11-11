@@ -15,6 +15,7 @@ import { FuncionariosComponent } from './funcionarios/funcionarios.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { HomeComponent } from './home/home.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false
@@ -27,7 +28,8 @@ const maskConfig: Partial<IConfig> = {
     ClientesComponent,
     RegistrosAlugueisComponent,
     CarrosComponent,
-    FuncionariosComponent
+    FuncionariosComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

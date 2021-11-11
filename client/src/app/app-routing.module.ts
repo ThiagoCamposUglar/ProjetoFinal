@@ -1,3 +1,4 @@
+import { HomeComponent } from './home/home.component';
 import { FuncionariosComponent } from './funcionarios/funcionarios.component';
 import { CarrosComponent } from './carros/carros.component';
 import { RegistrosAlugueisComponent } from './registros-alugueis/registros-alugueis.component';
@@ -9,7 +10,8 @@ const routes: Routes = [
   {path: 'clientes', component: ClientesComponent},
   {path: 'registros-alugueis', component: RegistrosAlugueisComponent},
   {path: 'carros', component: CarrosComponent},
-  {path: 'funcionarios', component: FuncionariosComponent}
+  {path: 'funcionarios', component: FuncionariosComponent},
+  {path: 'home', component: HomeComponent}
 ];
 
 @NgModule({

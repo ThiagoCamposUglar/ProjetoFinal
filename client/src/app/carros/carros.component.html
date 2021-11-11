@@ -7,31 +7,31 @@
         <div class="form-group">
           <h1>Carro: {{carroSelecionado.id}}</h1>
         <label>Modelo</label>
-        <input type="text" class="form-control col-md-8" formControlName="modelo">
+        <input type="text" class="form-control col-md-8" formControlName="modelo" required>
       </div>
       <div class="form-group">
         <label>Marca</label>
-        <input type="text" class="form-control col-md-8" formControlName="marca">
+        <input type="text" class="form-control col-md-8" formControlName="marca" required>
       </div>
       <div class="form-group">
         <label>Placa</label>
-        <input type="text" class="form-control col-md-8" formControlName="placa">
+        <input type="text" class="form-control col-md-8" formControlName="placa" required>
       </div>
       <div class="form-group">
         <label>Ano</label>
-        <input type="text" class="form-control col-md-8" formControlName="ano">
+        <input type="text" class="form-control col-md-8" formControlName="ano" required>
       </div>
       <div class="form-group">
         <label>Diária</label>
-        <input type="number" class="form-control col-md-8" formControlName="valorDiaria">
+        <input type="number" class="form-control col-md-8" formControlName="valorDiaria" required>
       </div>
       <div class="form-group">
         <label>Cor</label>
-        <input type="text" class="form-control col-md-8" formControlName="cor">
+        <input type="text" class="form-control col-md-8" formControlName="cor" required>
       </div>
       <div class="form-group">
         <label>Grupo</label>
-        <select class="form-control col-md-8" formControlName="grupoId">
+        <select class="form-control col-md-8" formControlName="grupoId" required>
           <option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.id}} - {{grupo.nomeGrupo}}</option>
         </select>
       </div>
@@ -44,7 +44,7 @@
     <h1>Carros</h1>
     <input type="text" class="sm-4" placeholder="Buscar" [(ngModel)]="filtroLista" style="margin-bottom: 10px;">
     <h3>Filtro: {{filtroLista}}</h3>
-    <table class="table table-hover">
+    <table class="table table-hover table-dark">
       <thead class="thead-dark">
         <tr>
           <th scope="col">ID</th>
@@ -70,9 +70,9 @@
           <td><div style="display: none;">{{carro.grupoId}}</div><div *ngFor="let grupo of grupos"><div *ngIf="carro.grupoId == grupo.id">{{grupo.nomeGrupo}}</div></div></td>
           <td>
             <div class="btn-group">
-              <button (click)="carroSelect(carro)" class="btn btn-sm btn-warning">Detalhes</button>
-              <button (click)="openModal(template); registrosSelect(carro)" class="btn btn-sm btn-primary">Registros</button>
-              <button class="btn btn-sm btn-danger">Desativar</button>
+              <button (click)="carroSelect(carro)" class="btn btn-sm btn-warning" style="margin-right: 10px;">Detalhes</button>
+              <button (click)="openModal(template); registrosSelect(carro)" class="btn btn-sm btn-primary" style="margin-right: 10px;">Registros</button>
+              <button (click)="openModal(deleteTemplate)" class="btn btn-sm btn-danger">Desativar</button>
             </div>
           </td>
         </tr>
@@ -157,11 +157,11 @@
 
 
 
-<ng-template #template class="myModal">
+<ng-template #template>
   <div class="modal-header myModal">
     <h1>{{carroSelecionado2.modelo}}</h1>
   </div>
-  <div class="modal-body myModal">
+  <div class="modal-body">
     <table class="table table-hover">
       <tbody *ngIf="registros && registros.length">
         <tr *ngFor="let registro of registros">
@@ -180,8 +180,8 @@
                 <div *ngIf="carro.id == registro.carroId">{{carro.modelo}}</div>
               </div>
             </td>
-            <td><time datetime="YYYY-MM-DD">{{registro.dataInicio}}</time></td>
-            <td>{{registro.dataFim}}</td>
+            <td>{{registro.dataInicio | date: 'dd-MM-yyyy'}}</td>
+            <td>{{registro.dataFim | date: 'dd-MM-yyyy'}}</td>
             <td>R${{registro.valorAluguel}}</td>
           </div>
         </tr>
@@ -193,5 +193,15 @@
     FECHAR
   </button>
 </div>
+</ng-template>
+
+<ng-template #deleteTemplate>
+  <div class="container">
+    <h1>Tem certeza que deseja desativar o carro?</h1>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger">Desativar</button>
+    <button type="button" class="btn btn-primary" (click)="modalRef?.hide()">Cancelar</button>
+  </div>
 </ng-template>
 

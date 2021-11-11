@@ -11,11 +11,11 @@
           </div>
           <div class="form-group">
             <label>Telefone</label>
-            <input mask="(00)00000-0000" type="text" class="form-control col-md-8" formControlName="telefone">
+            <input mask="(00)00000-0000" type="text" class="form-control col-md-8" formControlName="telefone" required minlength="11">
           </div>
           <div class="form-group">
             <label>CPF</label>
-            <input mask="000.000.000-00" type="text" class="form-control col-md-8" formControlName="cpf">
+            <input mask="000.000.000-00" type="text" class="form-control col-md-8" formControlName="cpf" required minlength="11">
           </div>
           <div class="form-group">
             <label>Email</label>
@@ -30,7 +30,7 @@
       <h1>Clientes</h1>
       <input type="text" class="sm-4" placeholder="Buscar" [(ngModel)]="filtroLista" style="margin-bottom: 10px;">
       <h3>Filtro: {{filtroLista}}</h3>
-      <table class="table table-hover">
+      <table class="table table-hover table-dark">
         <thead class="thead-dark">
           <tr>
             <th scope="col">ID</th>
@@ -50,9 +50,9 @@
             <td>{{cliente.email}}</td>
             <td>
               <div class="btn-group">
-                <button (click)="clienteSelect(cliente)" class="btn btn-sm btn-warning">Detalhes</button>
-                <button (click)="openModal(template)" class="btn btn-sm btn-primary">Registros</button>
-                <button class="btn btn-sm btn-danger">Desativar</button>
+                <button (click)="clienteSelect(cliente)" class="btn btn-sm btn-warning" style="margin-right: 10px;">Detalhes</button>
+                <button (click)="openModal(template); registrosSelect(cliente)" class="btn btn-sm btn-primary" style="margin-right: 10px;">Registros</button>
+                <button (click)="openModal(deleteTemplate); clienteSelectDelete(cliente)" class="btn btn-sm btn-danger">Desativar</button>
               </div>
             </td>
           </tr>
@@ -68,33 +68,21 @@
       <div class="form-row">
         <div class="col-md-6 mb-3">
           <label>Nome</label>
-          <input type="text" class="form-control" formControlName="nomeCliente" required>
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
+          <input type="text" class="form-control" formControlName="nomeCliente" required maxlength="50">
         </div>
         <div class="col-md-6 mb-3">
           <label>CPF</label>
-          <input type="text" class="form-control" formControlName="cpf" required>
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
+          <input mask="000.000.000-00" type="text" class="form-control" formControlName="cpf" required minlength="11">
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-6 mb-3">
           <label>Email</label>
-          <input type="text" class="form-control" formControlName="email" required>
-          <div class="invalid-tooltip">
-            Please provide a valid city.
-          </div>
+          <input type="email" class="form-control" formControlName="email" required maxlength="50">
         </div>
           <div class="col-md-6 mb-3">
             <label>Telefone</label>
-            <input type="text" class="form-control" formControlName="telefone" required>
-            <div class="invalid-tooltip">
-              Please provide a valid city.
-            </div>
+            <input mask="(00)00000-0000" type="text" class="form-control" formControlName="telefone" required minlength="9">
           </div>
         </div>
       <button class="btn btn-primary" type="submit" [disabled]="!novoClienteForm.valid" style="margin-bottom: 10px;">Criar</button>
@@ -114,12 +102,55 @@
 
 
 <ng-template #template>
-  <div class="modal-body">
-    salve salve
-  </div>
+    <div class="modal-header">
+      <h1>{{clienteSelecionado2.nomeCliente}}</h1>
+    </div>
+    <div class="modal-body">
+      <table class="table table-hover">
+        <tbody *ngIf="registros && registros.length">
+          <tr *ngFor="let registro of registros">
+            <div *ngIf="registro.clienteId == clienteSelecionado2.id">
+              <th scope="row">{{registro.id}}</th>
+              <td>
+                <div *ngFor="let cliente of clientes">
+                  <div *ngIf="cliente.id == registro.clienteId">
+                    {{cliente.nomeCliente}}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div style="display: none;">{{registro.carroId}}</div>
+                <div *ngFor="let carro of carros">
+                  <div *ngIf="carro.id == registro.carroId">{{carro.modelo}}</div>
+                </div>
+              </td>
+              <td>{{registro.dataInicio | date: 'dd-MM-yyyy'}}</td>
+              <td>{{registro.dataFim | date: 'dd-MM-yyyy'}}</td>
+              <td>R${{registro.valorAluguel}}</td>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
   <div class="modal-footer">
     <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef?.hide()">
       FECHAR
     </button>
+  </div>
+</ng-template>
+
+
+<ng-template #deleteTemplate>
+    <div class="modal-header">
+      <h1>Tem certeza que deseja desativar o cliente?</h1>
+    </div>
+    <div class="modal-body">
+      <h3>{{clienteSelecionadoDelete.nomeCliente}} - {{clienteSelecionadoDelete.email}}</h3>
+    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteCliente()">Desativar</button>
+    <button type="button" class="btn btn-primary" (click)="modalRef?.hide()">Cancelar</button>
   </div>
 </ng-template>

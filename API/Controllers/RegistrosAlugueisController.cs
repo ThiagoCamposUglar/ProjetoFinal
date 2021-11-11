@@ -70,11 +70,7 @@ namespace API.Controllers
         {
             registroAluguel.Carro = await _context.Carros.FindAsync(registroAluguel.CarroId);
             TimeSpan ts = registroAluguel.DataFim.Subtract(registroAluguel.DataInicio);
-            registroAluguel.ValorAluguel = Convert.ToInt32(ts.TotalDays) * registroAluguel.Carro.ValorDiaria;
-            if(registroAluguel.ValorAluguel == 0)
-            {
-                registroAluguel.ValorAluguel = registroAluguel.Carro.ValorDiaria;
-            }
+            registroAluguel.ValorAluguel = Convert.ToInt32(ts.TotalDays + 1) * registroAluguel.Carro.ValorDiaria;
             _context.Registros.Add(registroAluguel);
             await _context.SaveChangesAsync();
 
@@ -82,18 +78,18 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCarro(int id)
+        public async Task<IActionResult> DeleteRegistro(int id)
         {
-            var carro = await _context.Carros.FindAsync(id);
-            if (carro == null)
+            var registro = await _context.Registros.FindAsync(id);
+            if (registro == null)
             {
                 return NotFound();
             }
 
-            _context.Carros.Remove(carro);
+            _context.Registros.Remove(registro);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool RegistroExists(int id)

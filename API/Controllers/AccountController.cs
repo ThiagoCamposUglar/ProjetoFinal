@@ -44,7 +44,9 @@ namespace API.Controllers
             return new FuncionarioDto
             {
                 Username = funcionario.Login,
-                Token = _tokenService.CreateToken(funcionario)
+                Token = _tokenService.CreateToken(funcionario),
+                CargoId = funcionario.CargoId,
+                NomeFuncionario = funcionario.NomeFuncionario
             };
         }
 

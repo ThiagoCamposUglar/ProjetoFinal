@@ -12,13 +12,17 @@ import { AccountService } from '../_services/account.service';
 })
 export class ClientesComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/clientes';
+  registrosUrl = 'https://localhost:5001/api/registrosalugueis';
   public clienteSelecionado: any;
   clientes: any;
+  registros: any;
   public clienteForm: FormGroup;
   public novoClienteForm: FormGroup;
   modalRef?: BsModalRef;
   private _filtroLista: string = '';
   public clientesFiltrados: any = [];
+  public clienteSelecionadoDelete: any;
+  public clienteSelecionado2: any;
 
   public get filtroLista(): string {
     return this._filtroLista;
@@ -39,12 +43,22 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClientes();
+    this.getRegistros();
   }
 
   getClientes(){
     this.http.get(this.baseUrl).subscribe(response => {
       this.clientes = response;
       this.clientesFiltrados = this.clientes;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getRegistros(){
+    this.http.get(this.registrosUrl).subscribe(response => {
+      this.registros = response;
+      console.log(this.registros);
     }, error => {
       console.log(error);
     });
@@ -74,7 +88,16 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-
+  deleteCliente(){
+    this.http.delete(`${this.baseUrl}/${this.clienteSelecionadoDelete.id}`).subscribe(cliente => {
+      this.clienteSelecionadoDelete = cliente;
+      window.alert('Cliente deativado com sucesso');
+      this.modalRef?.hide();
+      this.getClientes();
+    }, error => {
+      console.log(error);
+    });
+  }
 
   criarForm(){
     this.clienteForm = this.fb.group({
@@ -82,7 +105,7 @@ export class ClientesComponent implements OnInit {
       nomeCliente: ['', Validators.required],
       telefone: ['', Validators.required],
       cpf: ['', Validators.required],
-      email: ['', Validators.required]
+      email: ['', Validators.email]
     })
   }
 
@@ -99,6 +122,14 @@ export class ClientesComponent implements OnInit {
     this.clienteSelecionado = cliente;
     this.clienteForm.patchValue(cliente);
     console.log(this.clienteSelecionado);
+  }
+
+  clienteSelectDelete(cliente: Cliente){
+    this.clienteSelecionadoDelete = cliente;
+  }
+
+  registrosSelect(cliente: Cliente){
+    this.clienteSelecionado2 = cliente;
   }
 
   voltar(){

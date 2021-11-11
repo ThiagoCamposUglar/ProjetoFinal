@@ -28,6 +28,7 @@ export class RegistrosAlugueisComponent implements OnInit {
   private _filtroLista: string = '';
   public registrosFiltrados: any[];
   idUsuarioAtual: number;
+  public registroSelecionadoDelete: any;
 
 
   public get filtroLista(): string {
@@ -120,6 +121,17 @@ export class RegistrosAlugueisComponent implements OnInit {
     }
   }
 
+  deleteRegistro(){
+    this.http.delete(`${this.baseUrl}/${this.registroSelecionadoDelete.id}`).subscribe(registro => {
+      this.registroSelecionadoDelete = registro;
+      window.alert('Registro desativado com sucesso');
+      this.modalRef?.hide();
+      this.getRegistros();
+    }, error => {
+      console.log(error);
+    });
+  }
+
   criarForm(){
     this.registroForm = this.fb.group({
       id:['', Validators.required],
@@ -147,6 +159,10 @@ export class RegistrosAlugueisComponent implements OnInit {
     this.registroSelecionado = registro;
     this.registroForm.patchValue(registro);
     console.log(this.registroSelecionado);
+  }
+
+  registroSelectDelete(registro: RegistroAluguel){
+    this.registroSelecionadoDelete = registro;
   }
 
   voltar(){

@@ -6,7 +6,7 @@
           <a class="nav-link" routerLink="/clientes">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/registros-alugueis">Registros</a>
+          <a class="nav-link" routerLink="/registros-alugueis">Registros de aluguel</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/carros">Carros</a>
@@ -43,3 +43,7 @@
 
   </div>
 </nav>
+
+<div *ngIf="(accountService.currentUser$ | async) === null">
+  <app-home></app-home>
+</div>
