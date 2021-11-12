@@ -15,11 +15,11 @@
       </div>
       <div class="form-group">
         <label>Placa</label>
-        <input type="text" class="form-control col-md-8" formControlName="placa" required>
+        <input mask="SSS-0A00" type="text" class="form-control col-md-8" formControlName="placa" required minlength="7">
       </div>
       <div class="form-group">
         <label>Ano</label>
-        <input type="text" class="form-control col-md-8" formControlName="ano" required>
+        <input mask="0000" type="text" class="form-control col-md-8" formControlName="ano" required minlength="4">
       </div>
       <div class="form-group">
         <label>Diária</label>
@@ -89,48 +89,30 @@
       <div class="col-md-6 mb-3">
         <label>Modelo</label>
         <input type="text" class="form-control" formControlName="modelo" required>
-        <div class="valid-tooltip">
-          Looks good!
-        </div>
       </div>
       <div class="col-md-6 mb-3">
         <label>Marca</label>
         <input type="text" class="form-control" formControlName="marca" required>
-        <div class="valid-tooltip">
-          Looks good!
-        </div>
       </div>
     </div>
     <div class="form-row">
       <div class="col-md-6 mb-3">
         <label>Placa</label>
         <input mask="SSS-0A00" type="text" class="form-control" formControlName="placa" required minlength="7">
-        <div class="invalid-tooltip">
-          Please provide a valid city.
-        </div>
       </div>
         <div class="col-md-6 mb-3">
           <label>Ano</label>
           <input mask="0000" type="text" class="form-control" formControlName="ano" required minlength="4">
-          <div class="invalid-tooltip">
-            Please provide a valid city.
-          </div>
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-4 mb-3">
           <label>Valor da diária</label>
           <input type="number" class="form-control" formControlName="valorDiaria" required>
-          <div class="invalid-tooltip">
-            Please provide a valid city.
-          </div>
         </div>
           <div class="col-md-4 mb-3">
             <label>Cor</label>
             <input type="text" class="form-control" formControlName="cor" required>
-            <div class="invalid-tooltip">
-              Please provide a valid city.
-            </div>
           </div>
           <div class="col-md-4 mb-3">
             <label>Grupo</label>

@@ -31,6 +31,7 @@ export class RegistrosAlugueisComponent implements OnInit {
   public registroSelecionadoDelete: any;
 
 
+
   public get filtroLista(): string {
     return this._filtroLista;
   }
