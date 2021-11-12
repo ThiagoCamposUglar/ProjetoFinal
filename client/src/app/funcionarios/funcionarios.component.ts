@@ -52,6 +52,7 @@ export class FuncionariosComponent implements OnInit {
     this.getCargos();
     this.getRegistros();
     this.funcionarioAtual = JSON.parse(localStorage.getItem('user'))
+    console.log(this.funcionarioAtual)
   }
 
   getfuncionarios(){
@@ -103,6 +104,9 @@ export class FuncionariosComponent implements OnInit {
   deleteFuncionario(){
     if(this.funcionarioAtual.cargoId != 1){
       window.alert('Você não tem permissão para realizar esta ação')
+    }
+    else if(this.funcionarioAtual.id == this.funcionarioSelecionadoDelete.id){
+      window.alert('Você não pode se excluir')
     }
     else{
       this.http.delete(`${this.baseUrl}/${this.funcionarioSelecionadoDelete.id}`).subscribe(funcionario => {

@@ -11,7 +11,8 @@ const routes: Routes = [
   {path: 'registros-alugueis', component: RegistrosAlugueisComponent},
   {path: 'carros', component: CarrosComponent},
   {path: 'funcionarios', component: FuncionariosComponent},
-  {path: 'home', component: HomeComponent}
+  {path: 'home', component: HomeComponent},
+  {path:'',redirectTo:'registros-alugueis', pathMatch: 'full' },
 ];
 
 @NgModule({
